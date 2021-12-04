@@ -1,4 +1,5 @@
 #include "wled.h"
+
 /*
  * Register your v2 usermods here!
  *   (for v1 usermods using just usermod.cpp, you can ignore this file)
@@ -10,6 +11,8 @@
  * \/ \/ \/
  */
 //#include "../usermods/EXAMPLE_v2/usermod_v2_example.h"
+#include "usermod_mqtt_switch.h"
+#include "usermod_mqtt_switch.h"
 
 #ifdef USERMOD_BATTERY_STATUS_BASIC
 #include "../usermods/battery_status_basic/usermod_v2_battery_status_basic.h"
@@ -46,18 +49,18 @@
 #include "../usermods/BME280_v2/usermod_bme280.h"
 #endif
 #ifdef USERMOD_FOUR_LINE_DISPLAY
-  #ifdef USE_ALT_DISPlAY
-    #include "../usermods/usermod_v2_four_line_display_ALT/usermod_v2_four_line_display_ALT.h"
-  #else 
-    #include "../usermods/usermod_v2_four_line_display/usermod_v2_four_line_display.h"
-  #endif
+#ifdef USE_ALT_DISPlAY
+#include "../usermods/usermod_v2_four_line_display_ALT/usermod_v2_four_line_display_ALT.h"
+#else
+#include "../usermods/usermod_v2_four_line_display/usermod_v2_four_line_display.h"
+#endif
 #endif
 #ifdef USERMOD_ROTARY_ENCODER_UI
-  #ifdef USE_ALT_DISPlAY
-    #include "../usermods/usermod_v2_rotary_encoder_ui_ALT/usermod_v2_rotary_encoder_ui_ALT.h"
-  #else
-    #include "../usermods/usermod_v2_rotary_encoder_ui/usermod_v2_rotary_encoder_ui.h"
-  #endif
+#ifdef USE_ALT_DISPlAY
+#include "../usermods/usermod_v2_rotary_encoder_ui_ALT/usermod_v2_rotary_encoder_ui_ALT.h"
+#else
+#include "../usermods/usermod_v2_rotary_encoder_ui/usermod_v2_rotary_encoder_ui.h"
+#endif
 #endif
 #ifdef USERMOD_AUTO_SAVE
 #include "../usermods/usermod_v2_auto_save/usermod_v2_auto_save.h"
@@ -104,6 +107,8 @@
 #include "../usermods/quinled-an-penta/quinled-an-penta.h"
 #endif
 
+//#include "usermod_touchbrightness.h"
+
 void registerUsermods()
 {
 /*
@@ -112,8 +117,10 @@ void registerUsermods()
    * \/ \/ \/
    */
   //usermods.add(new MyExampleUsermod());
+usermods.add(new UsermodMqttSwitch());
+usermods.add(new UsermodMqttSwitch());
 
-  #ifdef USERMOD_BATTERY_STATUS_BASIC
+#ifdef USERMOD_BATTERY_STATUS_BASIC
   usermods.add(new UsermodBatteryBasic());
   #endif
 

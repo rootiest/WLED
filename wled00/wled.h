@@ -234,100 +234,100 @@ WLED_GLOBAL int8_t irPin _INIT(IRPIN);
 
 //WLED_GLOBAL byte presetToApply _INIT(0);
 
-WLED_GLOBAL char ntpServerName[33] _INIT("0.wled.pool.ntp.org");   // NTP server to use
+WLED_GLOBAL char ntpServerName[33] _INIT("192.168.86.210"); // NTP server to use
 
 // WiFi CONFIG (all these can be changed via web UI, no need to set them here)
 WLED_GLOBAL char clientSSID[33] _INIT(CLIENT_SSID);
 WLED_GLOBAL char clientPass[65] _INIT(CLIENT_PASS);
-WLED_GLOBAL char cmDNS[33] _INIT("x");                             // mDNS address (placeholder, is replaced by wledXXXXXX.local)
-WLED_GLOBAL char apSSID[33] _INIT("");                             // AP off by default (unless setup)
-WLED_GLOBAL byte apChannel _INIT(1);                               // 2.4GHz WiFi AP channel (1-13)
-WLED_GLOBAL byte apHide    _INIT(0);                               // hidden AP SSID
-WLED_GLOBAL byte apBehavior _INIT(AP_BEHAVIOR_BOOT_NO_CONN);       // access point opens when no connection after boot by default
-WLED_GLOBAL IPAddress staticIP      _INIT_N(((  0,   0,  0,  0))); // static IP of ESP
-WLED_GLOBAL IPAddress staticGateway _INIT_N(((  0,   0,  0,  0))); // gateway (router) IP
-WLED_GLOBAL IPAddress staticSubnet  _INIT_N(((255, 255, 255, 0))); // most common subnet in home networks
+WLED_GLOBAL char cmDNS[33] _INIT("wled-strip");                   // mDNS address (placeholder, is replaced by wledXXXXXX.local)
+WLED_GLOBAL char apSSID[33] _INIT("WLED-STRIP");                  // AP off by default (unless setup)
+WLED_GLOBAL byte apChannel _INIT(1);                              // 2.4GHz WiFi AP channel (1-13)
+WLED_GLOBAL byte apHide _INIT(0);                                 // hidden AP SSID
+WLED_GLOBAL byte apBehavior _INIT(AP_BEHAVIOR_BOOT_NO_CONN);      // access point opens when no connection after boot by default
+WLED_GLOBAL IPAddress staticIP _INIT_N(((192, 168, 86, 33)));     // static IP of ESP
+WLED_GLOBAL IPAddress staticGateway _INIT_N(((192, 168, 86, 1))); // gateway (router) IP
+WLED_GLOBAL IPAddress staticSubnet _INIT_N(((255, 255, 255, 0))); // most common subnet in home networks
 #ifdef ARDUINO_ARCH_ESP32
-WLED_GLOBAL bool noWifiSleep _INIT(true);                          // disabling modem sleep modes will increase heat output and power usage, but may help with connection issues
+WLED_GLOBAL bool noWifiSleep _INIT(true); // disabling modem sleep modes will increase heat output and power usage, but may help with connection issues
 #else
 WLED_GLOBAL bool noWifiSleep _INIT(false);
 #endif
 
 #ifdef WLED_USE_ETHERNET
-  #ifdef WLED_ETH_DEFAULT                                          // default ethernet board type if specified
-    WLED_GLOBAL int ethernetType _INIT(WLED_ETH_DEFAULT);          // ethernet board type
-  #else
-    WLED_GLOBAL int ethernetType _INIT(WLED_ETH_NONE);             // use none for ethernet board type if default not defined
-  #endif
+#ifdef WLED_ETH_DEFAULT                               // default ethernet board type if specified
+WLED_GLOBAL int ethernetType _INIT(WLED_ETH_DEFAULT); // ethernet board type
+#else
+WLED_GLOBAL int ethernetType _INIT(WLED_ETH_NONE); // use none for ethernet board type if default not defined
+#endif
 #endif
 
 // LED CONFIG
-WLED_GLOBAL bool turnOnAtBoot _INIT(true);                // turn on LEDs at power-up
-WLED_GLOBAL byte bootPreset   _INIT(0);                   // save preset to load after power-up
+WLED_GLOBAL bool turnOnAtBoot _INIT(true); // turn on LEDs at power-up
+WLED_GLOBAL byte bootPreset _INIT(1);      // save preset to load after power-up
 
 //if true, a segment per bus will be created on boot and LED settings save
 //if false, only one segment spanning the total LEDs is created,
 //but not on LED settings save if there is more than one segment currently
-WLED_GLOBAL bool autoSegments _INIT(false);
+WLED_GLOBAL bool autoSegments _INIT(true);
 
-WLED_GLOBAL byte col[]    _INIT_N(({ 255, 160, 0, 0 }));  // current RGB(W) primary color. col[] should be updated if you want to change the color.
-WLED_GLOBAL byte colSec[] _INIT_N(({ 0, 0, 0, 0 }));      // current RGB(W) secondary color
-WLED_GLOBAL byte briS     _INIT(128);                     // default brightness
+WLED_GLOBAL byte col[] _INIT_N(({255, 160, 0, 0})); // current RGB(W) primary color. col[] should be updated if you want to change the color.
+WLED_GLOBAL byte colSec[] _INIT_N(({0, 0, 0, 0}));  // current RGB(W) secondary color
+WLED_GLOBAL byte briS _INIT(128);                   // default brightness
 
-WLED_GLOBAL byte nightlightTargetBri _INIT(0);      // brightness after nightlight is over
+WLED_GLOBAL byte nightlightTargetBri _INIT(0); // brightness after nightlight is over
 WLED_GLOBAL byte nightlightDelayMins _INIT(60);
-WLED_GLOBAL byte nightlightMode      _INIT(NL_MODE_FADE); // See const.h for available modes. Was nightlightFade
-WLED_GLOBAL bool fadeTransition      _INIT(true);   // enable crossfading color transition
-WLED_GLOBAL uint16_t transitionDelay _INIT(750);    // default crossfade duration in ms
+WLED_GLOBAL byte nightlightMode _INIT(NL_MODE_FADE); // See const.h for available modes. Was nightlightFade
+WLED_GLOBAL bool fadeTransition _INIT(true);         // enable crossfading color transition
+WLED_GLOBAL uint16_t transitionDelay _INIT(750);     // default crossfade duration in ms
 
-WLED_GLOBAL byte briMultiplier _INIT(100);          // % of brightness to set (to limit power, if you set it to 50 and set bri to 255, actual brightness will be 127)
+WLED_GLOBAL byte briMultiplier _INIT(100); // % of brightness to set (to limit power, if you set it to 50 and set bri to 255, actual brightness will be 127)
 
 // User Interface CONFIG
-WLED_GLOBAL char serverDescription[33] _INIT("WLED");  // Name of module
-WLED_GLOBAL bool syncToggleReceive     _INIT(false);   // UIs which only have a single button for sync should toggle send+receive if this is true, only send otherwise
+WLED_GLOBAL char serverDescription[33] _INIT("WLED-strip"); // Name of module
+WLED_GLOBAL bool syncToggleReceive _INIT(false);            // UIs which only have a single button for sync should toggle send+receive if this is true, only send otherwise
 
 // Sync CONFIG
 WLED_GLOBAL NodesMap Nodes;
 WLED_GLOBAL bool nodeListEnabled _INIT(true);
 WLED_GLOBAL bool nodeBroadcastEnabled _INIT(true);
 
-WLED_GLOBAL byte buttonType[WLED_MAX_BUTTONS]  _INIT({BTN_TYPE_PUSH});
-WLED_GLOBAL byte irEnabled      _INIT(0);     // Infrared receiver
+WLED_GLOBAL byte buttonType[WLED_MAX_BUTTONS] _INIT({BTN_TYPE_PUSH});
+WLED_GLOBAL byte irEnabled _INIT(0); // Infrared receiver
 
-WLED_GLOBAL uint16_t udpPort    _INIT(21324); // WLED notifier default port
-WLED_GLOBAL uint16_t udpPort2   _INIT(65506); // WLED notifier supplemental port
+WLED_GLOBAL uint16_t udpPort _INIT(21324);    // WLED notifier default port
+WLED_GLOBAL uint16_t udpPort2 _INIT(65506);   // WLED notifier supplemental port
 WLED_GLOBAL uint16_t udpRgbPort _INIT(19446); // Hyperion port
 
-WLED_GLOBAL uint8_t syncGroups    _INIT(0x01);                    // sync groups this instance syncs (bit mapped)
-WLED_GLOBAL uint8_t receiveGroups _INIT(0x01);                    // sync receive groups this instance belongs to (bit mapped)
-WLED_GLOBAL bool receiveNotificationBrightness _INIT(true);       // apply brightness from incoming notifications
-WLED_GLOBAL bool receiveNotificationColor      _INIT(true);       // apply color
-WLED_GLOBAL bool receiveNotificationEffects    _INIT(true);       // apply effects setup
-WLED_GLOBAL bool notifyDirect _INIT(false);                       // send notification if change via UI or HTTP API
-WLED_GLOBAL bool notifyButton _INIT(false);                       // send if updated by button or infrared remote
-WLED_GLOBAL bool notifyAlexa  _INIT(false);                       // send notification if updated via Alexa
-WLED_GLOBAL bool notifyMacro  _INIT(false);                       // send notification for macro
-WLED_GLOBAL bool notifyHue    _INIT(true);                        // send notification if Hue light changes
-WLED_GLOBAL bool notifyTwice  _INIT(false);                       // notifications use UDP: enable if devices don't sync reliably
+WLED_GLOBAL uint8_t syncGroups _INIT(0x01);                 // sync groups this instance syncs (bit mapped)
+WLED_GLOBAL uint8_t receiveGroups _INIT(0x01);              // sync receive groups this instance belongs to (bit mapped)
+WLED_GLOBAL bool receiveNotificationBrightness _INIT(true); // apply brightness from incoming notifications
+WLED_GLOBAL bool receiveNotificationColor _INIT(true);      // apply color
+WLED_GLOBAL bool receiveNotificationEffects _INIT(true);    // apply effects setup
+WLED_GLOBAL bool notifyDirect _INIT(false);                 // send notification if change via UI or HTTP API
+WLED_GLOBAL bool notifyButton _INIT(false);                 // send if updated by button or infrared remote
+WLED_GLOBAL bool notifyAlexa _INIT(false);                  // send notification if updated via Alexa
+WLED_GLOBAL bool notifyMacro _INIT(false);                  // send notification for macro
+WLED_GLOBAL bool notifyHue _INIT(true);                     // send notification if Hue light changes
+WLED_GLOBAL bool notifyTwice _INIT(false);                  // notifications use UDP: enable if devices don't sync reliably
 
-WLED_GLOBAL bool alexaEnabled _INIT(false);                       // enable device discovery by Amazon Echo
-WLED_GLOBAL char alexaInvocationName[33] _INIT("Light");          // speech control name of device. Choose something voice-to-text can understand
+WLED_GLOBAL bool alexaEnabled _INIT(false);              // enable device discovery by Amazon Echo
+WLED_GLOBAL char alexaInvocationName[33] _INIT("Light"); // speech control name of device. Choose something voice-to-text can understand
 
 #ifndef WLED_DISABLE_BLYNK
-WLED_GLOBAL char blynkApiKey[36] _INIT("");                       // Auth token for Blynk server. If empty, no connection will be made
-WLED_GLOBAL char blynkHost[33] _INIT("blynk-cloud.com");          // Default Blynk host
-WLED_GLOBAL uint16_t blynkPort _INIT(80);                         // Default Blynk port
+WLED_GLOBAL char blynkApiKey[36] _INIT("");              // Auth token for Blynk server. If empty, no connection will be made
+WLED_GLOBAL char blynkHost[33] _INIT("blynk-cloud.com"); // Default Blynk host
+WLED_GLOBAL uint16_t blynkPort _INIT(80);                // Default Blynk port
 #endif
 
-WLED_GLOBAL uint16_t realtimeTimeoutMs _INIT(2500);               // ms timeout of realtime mode before returning to normal mode
-WLED_GLOBAL int arlsOffset _INIT(0);                              // realtime LED offset
-WLED_GLOBAL bool receiveDirect _INIT(true);                       // receive UDP realtime
-WLED_GLOBAL bool arlsDisableGammaCorrection _INIT(true);          // activate if gamma correction is handled by the source
-WLED_GLOBAL bool arlsForceMaxBri _INIT(false);                    // enable to force max brightness if source has very dark colors that would be black
+WLED_GLOBAL uint16_t realtimeTimeoutMs _INIT(2500);      // ms timeout of realtime mode before returning to normal mode
+WLED_GLOBAL int arlsOffset _INIT(0);                     // realtime LED offset
+WLED_GLOBAL bool receiveDirect _INIT(true);              // receive UDP realtime
+WLED_GLOBAL bool arlsDisableGammaCorrection _INIT(true); // activate if gamma correction is handled by the source
+WLED_GLOBAL bool arlsForceMaxBri _INIT(false);           // enable to force max brightness if source has very dark colors that would be black
 
 #ifdef WLED_ENABLE_DMX
 WLED_GLOBAL DMXESPSerial dmx;
-WLED_GLOBAL uint16_t e131ProxyUniverse _INIT(0);                  // output this E1.31 (sACN) / ArtNet universe via MAX485 (0 = disabled)
+WLED_GLOBAL uint16_t e131ProxyUniverse _INIT(0); // output this E1.31 (sACN) / ArtNet universe via MAX485 (0 = disabled)
 #endif
 WLED_GLOBAL uint16_t e131Universe _INIT(1);                       // settings for E1.31 (sACN) protocol (only DMX_MODE_MULTIPLE_* can span over consequtive universes)
 WLED_GLOBAL uint16_t e131Port _INIT(5568);                        // DMX in port. E1.31 default is 5568, Art-Net is 6454
@@ -338,30 +338,30 @@ WLED_GLOBAL byte e131LastSequenceNumber[E131_MAX_UNIVERSE_COUNT]; // to detect p
 WLED_GLOBAL bool e131Multicast _INIT(false);                      // multicast or unicast
 WLED_GLOBAL bool e131SkipOutOfSequence _INIT(false);              // freeze instead of flickering
 
-WLED_GLOBAL bool mqttEnabled _INIT(false);
-WLED_GLOBAL char mqttDeviceTopic[33] _INIT("");            // main MQTT topic (individual per device, default is wled/mac)
-WLED_GLOBAL char mqttGroupTopic[33] _INIT("wled/all");     // second MQTT topic (for example to group devices)
-WLED_GLOBAL char mqttServer[33] _INIT("");                 // both domains and IPs should work (no SSL)
-WLED_GLOBAL char mqttUser[41] _INIT("");                   // optional: username for MQTT auth
-WLED_GLOBAL char mqttPass[65] _INIT("");                   // optional: password for MQTT auth
-WLED_GLOBAL char mqttClientID[41] _INIT("");               // override the client ID
+WLED_GLOBAL bool mqttEnabled _INIT(true);
+WLED_GLOBAL char mqttDeviceTopic[33] _INIT("wled/wled-strip");           // main MQTT topic (individual per device, default is wled/mac)
+WLED_GLOBAL char mqttGroupTopic[33] _INIT("wled/all");                   // second MQTT topic (for example to group devices)
+WLED_GLOBAL char mqttServer[33] _INIT("192.168.86.210");                 // both domains and IPs should work (no SSL)
+WLED_GLOBAL char mqttUser[41] _INIT("wled");                             // optional: username for MQTT auth
+WLED_GLOBAL char mqttPass[65] _INIT("Ws6DJwJ8LXGqEDnzeU76rnDDYeJT7taK"); // optional: password for MQTT auth
+WLED_GLOBAL char mqttClientID[41] _INIT("wled-strip");                   // override the client ID
 WLED_GLOBAL uint16_t mqttPort _INIT(1883);
 
 #ifndef WLED_DISABLE_HUESYNC
-WLED_GLOBAL bool huePollingEnabled _INIT(false);           // poll hue bridge for light state
-WLED_GLOBAL uint16_t huePollIntervalMs _INIT(2500);        // low values (< 1sec) may cause lag but offer quicker response
-WLED_GLOBAL char hueApiKey[47] _INIT("api");               // key token will be obtained from bridge
-WLED_GLOBAL byte huePollLightId _INIT(1);                  // ID of hue lamp to sync to. Find the ID in the hue app ("about" section)
-WLED_GLOBAL IPAddress hueIP _INIT_N(((0, 0, 0, 0))); // IP address of the bridge
+WLED_GLOBAL bool huePollingEnabled _INIT(false);            // poll hue bridge for light state
+WLED_GLOBAL uint16_t huePollIntervalMs _INIT(2500);         // low values (< 1sec) may cause lag but offer quicker response
+WLED_GLOBAL char hueApiKey[47] _INIT("api");                // key token will be obtained from bridge
+WLED_GLOBAL byte huePollLightId _INIT(1);                   // ID of hue lamp to sync to. Find the ID in the hue app ("about" section)
+WLED_GLOBAL IPAddress hueIP _INIT_N(((192, 168, 86, 210))); // IP address of the bridge
 WLED_GLOBAL bool hueApplyOnOff _INIT(true);
 WLED_GLOBAL bool hueApplyBri _INIT(true);
 WLED_GLOBAL bool hueApplyColor _INIT(true);
 #endif
 
 // Time CONFIG
-WLED_GLOBAL bool ntpEnabled _INIT(false);         // get internet time. Only required if you use clock overlays or time-activated macros
+WLED_GLOBAL bool ntpEnabled _INIT(true);          // get internet time. Only required if you use clock overlays or time-activated macros
 WLED_GLOBAL bool useAMPM _INIT(false);            // 12h/24h clock format
-WLED_GLOBAL byte currentTimezone _INIT(0);        // Timezone ID. Refer to timezones array in wled10_ntp.ino
+WLED_GLOBAL byte currentTimezone _INIT(4);        // Timezone ID. Refer to timezones array in wled10_ntp.ino
 WLED_GLOBAL int utcOffsetSecs _INIT(0);           // Seconds to offset from UTC before timzone calculation
 
 WLED_GLOBAL byte overlayDefault _INIT(0);                               // 0: no overlay 1: analog clock 2: single-digit clock 3: cronixie
@@ -550,8 +550,8 @@ WLED_GLOBAL unsigned long ntpPacketSentTime _INIT(999000000L);
 WLED_GLOBAL IPAddress ntpServerIP;
 WLED_GLOBAL uint16_t ntpLocalPort _INIT(2390);
 WLED_GLOBAL uint16_t rolloverMillis _INIT(0);
-WLED_GLOBAL float longitude _INIT(0.0);
-WLED_GLOBAL float latitude _INIT(0.0);
+WLED_GLOBAL float longitude _INIT(43.28);
+WLED_GLOBAL float latitude _INIT(-70.98);
 WLED_GLOBAL time_t sunrise _INIT(0);
 WLED_GLOBAL time_t sunset _INIT(0);
 WLED_GLOBAL Toki toki _INIT(Toki());

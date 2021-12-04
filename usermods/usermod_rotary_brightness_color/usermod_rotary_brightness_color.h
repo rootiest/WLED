@@ -172,9 +172,9 @@ public:
   {
     // set defaults here, they will be set before setup() is called, and if any values parsed from ArduinoJson below are missing, the default will be used instead
     fadeAmount = 5;
-    pins[0] = -1;
-    pins[1] = -1;
-    pins[2] = -1;
+    pins[0] = 19;
+    pins[1] = 18;
+    pins[2] = 17;
 
     JsonObject top = root["rotEncBrightness"];
 

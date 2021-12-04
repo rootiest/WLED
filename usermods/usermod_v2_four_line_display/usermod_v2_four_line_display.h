@@ -121,12 +121,12 @@ class FourLineDisplayUsermod : public Usermod {
     DisplayType type = SSD1306_SPI; // display type
     #endif
     bool flip = false;              // flip display 180°
-    uint8_t contrast = 10;          // screen contrast
+    uint8_t contrast = 50;          // screen contrast
     uint8_t lineHeight = 1;         // 1 row or 2 rows
     uint32_t refreshRate = USER_LOOP_REFRESH_RATE_MS; // in ms
     uint32_t screenTimeout = SCREEN_TIMEOUT_MS;       // in ms
-    bool sleepMode = true;          // allow screen sleep?
-    bool clockMode = false;         // display clock
+    bool sleepMode = false;          // allow screen sleep?
+    bool clockMode = true;         // display clock
 
     // Next variables hold the previous known values to determine if redraw is
     // required.

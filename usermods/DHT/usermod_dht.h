@@ -33,7 +33,7 @@
 #define DHTPIN USERMOD_DHT_PIN
 #else
 #ifdef ARDUINO_ARCH_ESP32
-#define DHTPIN 21
+#define DHTPIN 23
 #else //ESP8266 boards
 #define DHTPIN 4
 #endif
@@ -206,6 +206,18 @@ class UsermodDHT : public Usermod {
       #else
       temp.add("°F");
       #endif
+      if (WLED_MQTT_CONNECTED)
+      {
+        char subuf[64];
+        strcpy(subuf, mqttDeviceTopic);
+        strcat_P(subuf, PSTR("/humidity"));
+        mqtt->publish(subuf, 0, false, String(humidity).c_str());
+        strcpy(subuf, mqttDeviceTopic);
+        strcat_P(subuf, PSTR("/temperature"));
+        mqtt->publish(subuf, 0, false, String(temperature).c_str());
+        //strcat_P(subuf, PSTR("_f"));
+        //mqtt->publish(subuf, 0, false, String((float)temperature * 1.8f + 32).c_str());
+      }
     }
    
     uint16_t getId()
