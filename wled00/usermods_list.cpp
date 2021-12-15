@@ -103,6 +103,10 @@
 #include "../usermods/seven_segment_display/usermod_v2_seven_segment_display.h"
 #endif
 
+#ifdef USERMOD_SSDR
+#include "../usermods/seven_segment_display_reloaded/usermod_seven_segment_reloaded.h"
+#endif
+
 #ifdef QUINLED_AN_PENTA
 #include "../usermods/quinled-an-penta/quinled-an-penta.h"
 #endif
@@ -197,6 +201,10 @@ usermods.add(new UsermodMqttSwitch());
 
   #ifdef USERMOD_SEVEN_SEGMENT
   usermods.add(new SevenSegmentDisplay());
+  #endif
+
+  #ifdef USERMOD_SSDR
+  usermods.add(new UsermodSSDR());
   #endif
 
   #ifdef QUINLED_AN_PENTA

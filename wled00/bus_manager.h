@@ -91,7 +91,7 @@ class Bus {
     virtual void     setBrightness(uint8_t b) {}
     virtual void     cleanup() {}
     virtual uint8_t  getPins(uint8_t* pinArray) { return 0; }
-    inline  uint16_t getLength() { return _len; }
+    virtual uint16_t getLength() { return _len; }
     virtual void     setColorOrder() {}
     virtual uint8_t  getColorOrder() { return COL_ORDER_RGB; }
     virtual uint8_t  skippedLeds() { return 0; }
@@ -220,7 +220,7 @@ class BusDigital : public Bus {
     return _colorOrder;
   }
 
-  inline uint16_t getLength() {
+  uint16_t getLength() {
     return _len - _skip;
   }
 
@@ -318,8 +318,12 @@ class BusPwm : public Bus {
       cct = (approximateKelvinFromRGB(c) - 1900) >> 5;
     }
 
-		//0 - linear (CCT 127 = 50% warm, 50% cold), 127 - additive CCT blending (CCT 127 = 100% warm, 100% cold)
 		uint8_t ww, cw;
+		#ifdef WLED_USE_IC_CCT
+		ww = w;
+		cw = cct;
+		#else
+		//0 - linear (CCT 127 = 50% warm, 50% cold), 127 - additive CCT blending (CCT 127 = 100% warm, 100% cold)
 		if (cct       < _cctBlend) ww = 255;
 		else ww = ((255-cct) * 255) / (255 - _cctBlend);
 
@@ -328,6 +332,7 @@ class BusPwm : public Bus {
 
 		ww = (w * ww) / 255; //brightness scaling
 		cw = (w * cw) / 255;
+		#endif
 
     switch (_type) {
       case TYPE_ANALOG_1CH: //one channel (white), relies on auto white calculation
@@ -449,8 +454,8 @@ class BusNetwork : public Bus {
 
   void setPixelColor(uint16_t pix, uint32_t c) {
     if (!_valid || pix >= _len) return;
+		if (isRgbw()) c = autoWhiteCalc(c);
     if (_cct >= 1900) c = colorBalanceFromKelvin(_cct, c); //color correction from CCT
-    c = autoWhiteCalc(c);
     uint16_t offset = pix * _UDPchannels;
     _data[offset]   = R(c);
     _data[offset+1] = G(c);

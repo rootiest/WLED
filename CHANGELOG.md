@@ -2,6 +2,17 @@
 
 ### Builds after release 0.12.0
 
+#### Build 2112080
+
+-		Version bump to 0.13.0-b6 "Toki"
+-		Added "ESP02" (ESP8266 with 2M of flash) to PIO/release binaries
+
+#### Build 2112070
+
+-		Added new effect "Fairy", replacing "Police All"
+-		Added new effect "Fairytwinkle", replacing "Two Areas"
+-		Static single JSON buffer (performance and stability improvement) (PR #2336)
+
 #### Build 2112030
 
 -		Fixed ESP32 crash on Colortwinkles brightness change
